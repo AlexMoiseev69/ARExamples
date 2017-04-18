@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 <!-- three.js library -->
-<script src='AR.js/three.js/examples/vendor/three.js/build/three.js'></script>
-<script src="AR.js/three.js/examples/vendor/three.js/examples/js/libs/stats.min.js"></script>
+<script src='../Lib/AR.js/three.js/examples/vendor/three.js/build/three.js'></script>
+<script src="../Lib/AR.js/three.js/examples/vendor/three.js/examples/js/libs/stats.min.js"></script>
 <!-- jsartookit -->
-<script src="AR.js/three.js/vendor/jsartoolkit5/build/artoolkit.min.js"></script>
-<script src="AR.js/three.js/vendor/jsartoolkit5/js/artoolkit.api.js"></script>
+<script src="../Lib/AR.js/three.js/vendor/jsartoolkit5/build/artoolkit.min.js"></script>
+<script src="../Lib/AR.js/three.js/vendor/jsartoolkit5/js/artoolkit.api.js"></script>
 <!-- include threex.artoolkit -->
-<script src="AR.js/three.js/threex-artoolkitsource.js"></script>
-<script src="AR.js/three.js/threex-artoolkitcontext.js"></script>
-<script src="AR.js/three.js/threex-armarkercontrols.js"></script>
+<script src="../Lib/AR.js/three.js/threex-artoolkitsource.js"></script>
+<script src="../Lib/AR.js/three.js/threex-artoolkitcontext.js"></script>
+<script src="../Lib/AR.js/three.js/threex-armarkercontrols.js"></script>
 <script>THREEx.ArToolkitContext.baseURL = '../'</script>
-		<script src="three.js/examples/js/utils/GeometryUtils.js"></script>
+<script src="../Lib/three.js/examples/js/utils/GeometryUtils.js"></script>
 
-<body style='margin : 0px; overflow: hidden; font-family: Monospace;'><div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
-	<a href="https://github.com/jeromeetienne/AR.js/" target="_blank">AR.js</a> - three.js mobile performance
-	<br/>
-	Contact me any time at <a href='https://twitter.com/jerome_etienne' target='_blank'>@jerome_etienne</a>
-</div><script>
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+
+<script>
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Init
 	//////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +88,7 @@
 
 	// create atToolkitContext
 	var arToolkitContext = new THREEx.ArToolkitContext({
-		cameraParametersUrl: 'AR.js/data/data/camera_para.dat',
+		cameraParametersUrl: '../Lib/AR.js/data/data/camera_para.dat',
 		detectionMode: 'mono',
 		maxDetectionRate: 30,
 		canvasWidth: 80*3,
@@ -118,7 +116,7 @@
 	scene.add(markerRoot)
 	var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
 		type : 'pattern',
-		patternUrl : 'AR.js/data/data/patt.hiro'
+		patternUrl : '../Lib/AR.js/data/data/patt.hiro'
 		// patternUrl : '../../data/data/patt.kanji'
 	})
 
@@ -135,13 +133,13 @@
 	}); 
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.y	= geometry.parameters.height/2
-	markerRoot.add( mesh );
+	// markerRoot.add( mesh );
 	
 	var geometry	= new THREE.TorusKnotGeometry(0.3,0.1,32,32);
 	var material	= new THREE.MeshNormalMaterial(); 
 	var mesh	= new THREE.Mesh( geometry, material );
 	mesh.position.y	= 0.5
-	markerRoot.add( mesh );
+	// markerRoot.add( mesh );
 	
 	onRenderFcts.push(function(){
 		mesh.rotation.x += 0.1
@@ -177,16 +175,16 @@
 
 			function loadFont() {
 				var loader = new THREE.FontLoader();
-				loader.load( 'three.js/examples/fonts/' + fontName + '_' + fontWeight + '.typeface.json', function ( response ) {
+				loader.load( '../Lib/three.js/examples/fonts/' + fontName + '_' + fontWeight + '.typeface.json', function ( response ) {
 					font = response;
 					//refreshText();
 					var textMesh = createText();
 					markerRoot.add( textMesh );
 				} );
 			}
-var text = "Ss",
-				height = 2,
-				size = 2,
+var text = "Text example",
+				height = 1,
+				size = 40,
 				hover = 30,
 				curveSegments = 4,
 				bevelThickness = 2,
@@ -238,13 +236,24 @@ loadFont();
 						}
 					}
 				}
+				var material = new THREE.MultiMaterial( [
+					new THREE.MeshPhongMaterial( { color: 0xffffff, shading: THREE.FlatShading } ), // front
+					new THREE.MeshPhongMaterial( { color: 0xffffff, shading: THREE.SmoothShading } ) // side
+				] );
 				var centerOffset = -0.5 * ( textGeo.boundingBox.max.x - textGeo.boundingBox.min.x );
 				var textMesh1 = new THREE.Mesh( textGeo, material );
-				textMesh1.position.x = 0;
+				textMesh1.position.x = -2;
 				textMesh1.position.y = 0;
-				textMesh1.position.z = 0;
-				textMesh1.rotation.x = 0;
-				textMesh1.rotation.y = 0;
+				textMesh1.position.z = 2;
+
+				textMesh1.rotation.x = Math.PI / 2;
+				textMesh1.rotation.y = Math.PI;
+				textMesh1.rotation.z = Math.PI;
+				
+				textMesh1.scale.x = 0.05;
+				textMesh1.scale.y = 0.05;
+				textMesh1.scale.z = 0.05;
+
 				return textMesh1;
 			}
 </script></body>
